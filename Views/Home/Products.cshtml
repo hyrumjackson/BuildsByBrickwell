@@ -1,0 +1,74 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Products";
+
+    // Dummy Product Data
+    var products = new List<dynamic>
+    {
+        new { Id = 1, Name = "Castle Adventure", Category = "Fantasy", Color = "Multicolor", Price = 99.99, ImageUrl = "https://via.placeholder.com/150" },
+        new { Id = 2, Name = "Space Explorer", Category = "Space", Color = "Black", Price = 129.99, ImageUrl = "https://via.placeholder.com/150" },
+        new { Id = 3, Name = "Pirate Ship", Category = "Adventure", Color = "Brown", Price = 89.99, ImageUrl = "https://via.placeholder.com/150" },
+        new { Id = 4, Name = "Downtown Diner", Category = "City", Color = "Red", Price = 169.99, ImageUrl = "https://via.placeholder.com/150" },
+        new { Id = 5, Name = "Dragon Castle", Category = "Fantasy", Color = "Green", Price = 199.99, ImageUrl = "https://via.placeholder.com/150" }
+    };
+
+    // Dummy Categories and Colors for Filters
+    var categories = new List<string> { "Fantasy", "Space", "Adventure", "City" };
+    var colors = new List<string> { "Multicolor", "Black", "Brown", "Red", "Green" };
+}
+
+<div class="container py-5">
+    <h1>Our Products</h1>
+
+    <!-- Filter and Display Options -->
+    <div class="row mb-3">
+        <div class="col">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <select class="form-select" onchange="location = this.value;">
+                        <option value="">All Categories</option>
+                        @foreach (var category in categories)
+                        {
+                            <option value="?category=@category">@category</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <select class="form-select" onchange="location = this.value;">
+                        <option value="">All Colors</option>
+                        @foreach (var color in colors)
+                        {
+                            <option value="?color=@color">@color</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <!-- Dummy page size changer -->
+                    <select class="form-select" onchange="alert('Page size change feature not implemented in dummy data mode.');">
+                        <option value="5">5 per page</option>
+                        <option value="10">10 per page</option>
+                        <option value="20">20 per page</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var product in products)
+        {
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">@product.Name</h5>
+                        <a asp-area="" asp-controller="Home" asp-action="Details">Product Details</a>
+                        <p class="card-text">@product.Category - @product.Color</p>
+                        <p class="card-text">$@product.Price</p>
+                        <a class="btn btn-primary" asp-area="" asp-controller="Home" asp-action="Cart">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
