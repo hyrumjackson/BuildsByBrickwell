@@ -3,14 +3,14 @@
 }
 
 <!-- Hero Section -->
-<section class="hero bg-dark text-white text-center py-5">
+<section class="hero bg-light text-dark text-center py-5">
     <div class="container">
         <h1>Welcome to Builds by Brickwell</h1>
         <p class="lead">Explore the world of endless creativity with our unique LEGO sets.</p>
         <form asp-area="" asp-controller="Home" asp-action="Products" method="get" class="d-flex justify-content-center my-4">
             <div class="input-group mb-3" style="max-width: 500px;">
                 <input type="text" class="form-control" placeholder="Search LEGO sets..." aria-label="Search LEGO sets" name="searchTerm">
-                <button class="btn btn-outline-primary" type="submit">Search</button>
+                <button class="btn btn-outline-secondary" type="submit">Search</button>
             </div>
         </form>
     </div>
@@ -22,8 +22,8 @@
         <div class="row align-items-center">
             <div class="col-lg-6">
                 <h2>About Builds by Brickwell</h2>
-                <p>Welcome to Builds by Brickwell, your ultimate destination for creative LEGO sets. Whether you're a seasoned builder or just starting out, we have something to spark everyone's imagination.</p>
-                <a class="btn btn-primary" asp-area="" asp-controller="Home" asp-action="About">Learn More</a>
+                <p class="lead">Welcome to Builds by Brickwell, your ultimate destination for creative LEGO sets. Whether you're a seasoned builder or just starting out, we have something to spark everyone's imagination.</p>
+                <a class="btn" asp-area="" asp-controller="Home" asp-action="About" style="background-color: #00c3fc; color: #ffffff;">Learn More</a>
             </div>
             <div class="col-lg-6">
                 <img src="~/img/about.png" class="img-fluid" alt="About Builds by Brickwell">
@@ -36,7 +36,7 @@
 <section class="cta bg-light text-center py-5">
     <div class="container">
         <h2>Ready to Build Your Masterpiece?</h2>
-        <p>Explore our collections and find the perfect set to start your next project.</p>
-        <a class="btn btn-primary btn-lg" asp-area="" asp-controller="Home" asp-action="Products">Browse Collections</a>
+        <p class="lead">Explore our collections and find the perfect set to start your next project.</p>
+        <a class="btn" asp-area="" asp-controller="Home" asp-action="Products" style="background-color: #00c3fc; color: #ffffff;">Browse Collections</a>
     </div>
 </section>

@@ -7,30 +7,86 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/BuildsByBrickwell.styles.css" asp-append-version="true" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .navbar-custom, .footer-custom {
+            background-color: #00c3fc;
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+            .navbar-custom .navbar-brand,
+            .navbar-custom .nav-link,
+            .navbar-custom .navbar-toggler-icon,
+            .footer-custom a {
+                color: #ffffff;
+            }
+
+            .navbar-custom .navbar-brand {
+                padding-left: 30px;
+            }
+
+        .navbar-custom {
+            min-height: 80px !important;
+        }
+
+        .welcome-text {
+            font-size: 4rem;
+        }
+
+        .login-btn {
+            font-size: 1.5rem;
+            margin-right: 20px;
+        }
+
+        .menu-icon img {
+            height: 100px;
+        }
+
+        .menu-icon-container {
+            padding-right: 30px;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container">
-                <a class="navbar-brand" href="/">Builds By Brickwell</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Products">Products</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About Us</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Cart">Cart</a>
-                        </li>
-                    </ul>
+        <nav class="navbar navbar-expand-lg navbar-custom">
+            <div class="container-fluid">
+                <a asp-area="" asp-controller="Home" asp-action="Home" class="navbar-brand">
+                    <img src="~/img/bw_logo.jpg" alt="BW Logo" style="height: 110px;">
+                </a>
+                <div class="navbar-nav mx-auto">
+                    @if (ViewContext.RouteData.Values["Action"].ToString() != "Index")
+                    {
+                        <form class="d-flex">
+                            <input class="form-control me-2" type="search" placeholder="What are you looking for?" aria-label="Search" style="width: 50%;">
+                            <button class="btn btn-outline-light" type="submit">Search</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <h1 class="welcome-text">WELCOME!</h1>
+                    }
+                </div>
+                <div class="d-flex align-items-center">
+                    <a class="btn login-btn" asp-area="" asp-controller="Home" asp-action="Login">Login</a>
+                    <div class="dropdown menu-icon-container">
+                        <a class="menu-icon" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="~/img/menu.png" style="height: 25px;" />
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
+                            <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Products">Products</a></li>
+                            <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="About">About Us</a></li>
+                            <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Cart">Cart</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -39,7 +95,7 @@
         @RenderBody()
     </main>
 
-    <footer class="footer mt-auto py-3 bg-dark text-white">
+    <footer class="footer mt-auto py-3 footer-custom">
         <div class="container text-center">
             &copy; 2024 Builds By Brickwell. All rights reserved. <a class="text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy Policy</a>
         </div>
