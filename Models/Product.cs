@@ -1,6 +1,19 @@
-﻿namespace BuildsByBrickwell.Models
+﻿using System.Runtime.InteropServices.Marshalling;
+
+namespace BuildsByBrickwell.Models
 {
     public class Product
     {
+        public int product_ID {  get; set; }
+        public string name { get; set; }
+        public int year { get; set; }
+        public int num_parts { get; set; }
+        public int price { get; set; }
+        public int img_link { get; set; }
+        public string primary_color { get; set; }
+        public string secondary_color { get; set;}
+        public string description { get; set; }
+        public string category { get; set; }
+
     }
 }
