@@ -43,6 +43,11 @@ namespace BuildsByBrickwell.Controllers
             return View();
         }
 
+        public IActionResult Testing()
+        {
+            return View();
+        }
+
         public IActionResult Login()
         {
             return View();
