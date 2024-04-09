@@ -2,20 +2,21 @@
     ViewData["Title"] = "Products";
 
     // Dummy Product Data
-    var products = new List<dynamic>
-    {
-        new { Id = 1, Name = "Castle Adventure", Category = "Fantasy", Color = "Multicolor", Price = 99.99, ImageUrl = "/img/lego_castle.png" },
-        new { Id = 2, Name = "Space Explorer", Category = "Space", Color = "Black", Price = 129.99, ImageUrl = "/img/space_lego.jpeg" },
-        new { Id = 3, Name = "Pirate Ship", Category = "Adventure", Color = "Brown", Price = 89.99, ImageUrl = "/img/lego_ship.png" },
-        new { Id = 4, Name = "Downtown Diner", Category = "City", Color = "Red", Price = 169.99, ImageUrl = "/img/lego_diner.png" },
-        new { Id = 5, Name = "Dragon Castle", Category = "Fantasy", Color = "Green", Price = 199.99, ImageUrl = "/img/lego_dragon.png" }
+    // var products = new List<dynamic>
+    // {
+    //     new { Id = 1, Name = "Castle Adventure", Category = "Fantasy", Color = "Multicolor", Price = 99.99, ImageUrl = "/img/lego_castle.png" },
+    //     new { Id = 2, Name = "Space Explorer", Category = "Space", Color = "Black", Price = 129.99, ImageUrl = "/img/space_lego.jpeg" },
+    //     new { Id = 3, Name = "Pirate Ship", Category = "Adventure", Color = "Brown", Price = 89.99, ImageUrl = "/img/lego_ship.png" },
+    //     new { Id = 4, Name = "Downtown Diner", Category = "City", Color = "Red", Price = 169.99, ImageUrl = "/img/lego_diner.png" },
+    //     new { Id = 5, Name = "Dragon Castle", Category = "Fantasy", Color = "Green", Price = 199.99, ImageUrl = "/img/lego_dragon.png" }
 
-    };
-
+    // };
     // Dummy Categories and Colors for Filters
     var categories = new List<string> { "Fantasy", "Space", "Adventure", "City" };
     var colors = new List<string> { "Multicolor", "Black", "Brown", "Red", "Green" };
 }
+
+@model ProductsListViewModel
 
 <div class="container py-5">
     <!-- Home Link -->
@@ -26,13 +27,13 @@
     <!-- Products Heading -->
     <div class="text-center">
         <h1>Products</h1>
-		<hr>
+        <hr>
     </div>
 
     <!-- Filters Section -->
     <div class="mb-3 p-3" style="background-color: #f5f5f5;">
         <span class="font-weight-bold">Filters</span>
-		<img src="~/img/filters.png" style="height: 20px"/>
+        <img src="~/img/filters.png" style="height: 20px" />
         <span class="ml-3">Color:</span>
         <select class="form-select d-inline-block w-auto" style="background-color: #ffffff;">
             <option value="">Select Color</option>
@@ -42,33 +43,34 @@
             }
         </select>
         <span class="ml-3">Category:</span>
-        <select class="form-select d-inline-block w-auto" style="background-color: #ffffff;">
+        @* This is a drop down filter and I'll figure it out later *@
+        @* <select class="form-select d-inline-block w-auto" style="background-color: #ffffff;">
             <option value="">Select Category</option>
             @foreach (var category in categories)
             {
                 <option value="@category">@category</option>
             }
-        </select>
+        </select> *@
+
+        <vc:product-types />
     </div>
 
     <!-- Products Grid -->
     <div class="row row-cols-1 row-cols-md-3 g-4">
-        @foreach (var product in products)
+        @foreach (Product p in Model.Products)
         {
-            <div class="col">
-                <div class="card h-100">
-                    <div class="image-wrapper">
-                        <img src="@product.ImageUrl" class="card-img-top" alt="@product.Name">
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <a asp-area="" asp-controller="Home" asp-action="Details" class="text-dark">@product.Name</a>
-                        </h5>
-                        <p class="card-text">$@product.Price</p>
-                        <a class="btn btn-primary" asp-area="" asp-controller="Home" asp-action="Cart">Add to Cart</a>
-                    </div>
-                </div>
-            </div>
+            <partial name="ProductSummary" model="p" />
         }
     </div>
+
 </div>
+
+
+
+@* Custom Tag Helper  *@
+<div page-model="@Model.PaginationInfo" page-action="Products" page-class-enabled="true" page-class="btn"
+     page-class-normal="btn-outline-dark" page-class-selected="btn-primary"
+     page-url-projectType="@Model.CurrentProductType" class="btn-group pull-right m-1"></div>
+
+
+ 
