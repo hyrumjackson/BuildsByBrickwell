@@ -29,6 +29,7 @@ public partial class IntexProjectContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+
         modelBuilder.Entity<Customer>(entity =>
         {
             entity.HasNoKey();

@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using BuildsByBrickwell.Models;
+using BuildsByBrickwell.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BuildsByBrickwell.Controllers
@@ -23,9 +24,29 @@ namespace BuildsByBrickwell.Controllers
             return View();
         }
 
-        public IActionResult Products()
+        public IActionResult Products(int pageNum, string productType)
         {
-            return View();
+            int pageSize = 5;
+
+            var blah = new ProductsListViewModel
+            {
+                Products = _context.Products
+                    .Where(x => x.Category == productType || productType == null)
+                    .OrderBy(x => x.Name)
+                    .Skip((pageNum - 1) * pageSize)
+                    .Take(pageSize),
+
+                PaginationInfo = new PaginationInfo
+                {
+                    CurrentPage = pageNum,
+                    ItemsPerPage = pageSize,
+                    TotalItems = productType == null ? _context.Products.Count() : _context.Products.Where(x => x.Category == productType).Count(),
+                },
+
+                CurrentProductType = productType
+            };
+
+            return View(blah);
         }
 
         public IActionResult About()
@@ -38,9 +59,10 @@ namespace BuildsByBrickwell.Controllers
             return View();
         }
 
-        public IActionResult Details()
+        public IActionResult Details(string Order)
         {
-            return View();
+            var CurrentOrder = Order;
+            return View(CurrentOrder);
         }
 
         public IActionResult Testing()
