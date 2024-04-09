@@ -8,7 +8,7 @@
 
 <div class="d-grid gap-2">
     @* Let's build the home tag *@
-    <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Products" asp-route-productType="" asp-route-pageNum="">Home</a> 
+    <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Products" asp-route-productType="" asp-route-pageNum="">All Products</a> 
 
     @foreach (string pt in Model ?? Enumerable.Empty<string>()) 
     {
