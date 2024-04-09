@@ -1,10 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-
-@model IQueryable<string>
+﻿@model IQueryable<string>
 
 <div class="d-grid gap-2">
     @* Let's build the home tag *@
@@ -12,6 +6,6 @@
 
     @foreach (string pt in Model ?? Enumerable.Empty<string>()) 
     {
-        <a class="btn @(pt == ViewBag.SelectedProductType ? "btn-primary" : "btn-outline-secondary")" asp-controller="Home" asp-action="Products" asp-route-productType="@pt" asp-route-pageNum="1">@pt</a>
+        <a class="btn @(pt == ViewBag.SelectedProductType ? "btn-primary" : "btn-outline-secondary")" asp-controller="Home" asp-action="Products" asp-route-productType="@pt" asp-route-pageNum="1" >@pt</a>
     } 
-</div> 
+</div>
