@@ -24,7 +24,7 @@ namespace BuildsByBrickwell.Controllers
             return View();
         }
 
-        public IActionResult Products(int pageNum, string productType)
+        public IActionResult Products(int pageNum, string? productType)
         {
             int pageSize = 5;
 
