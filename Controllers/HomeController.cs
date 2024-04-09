@@ -24,7 +24,7 @@ namespace BuildsByBrickwell.Controllers
             return View();
         }
 
-        public IActionResult Products(int pageNum, string productType)
+        public IActionResult Products(int pageNum, string? productType)
         {
             int pageSize = 5;
 
@@ -55,6 +55,16 @@ namespace BuildsByBrickwell.Controllers
         }
 
         public IActionResult Cart()
+        {
+            return View();
+        }
+
+        public IActionResult Checkout()
+        {
+            return View();
+        }
+
+        public IActionResult OrderStatus()
         {
             return View();
         }
