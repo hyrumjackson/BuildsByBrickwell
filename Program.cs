@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<IntexContext>(options =>
+builder.Services.AddDbContext<IntexProjectContext>(options =>
 {
     options.UseSqlite(builder.Configuration["ConnectionStrings:IntexConnection"]);
 });

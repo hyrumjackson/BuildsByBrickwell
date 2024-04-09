@@ -1,19 +1,33 @@
-﻿namespace BuildsByBrickwell.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace BuildsByBrickwell.Models;
+
+public partial class Order
 {
-    public class Order
-    {
-        public int transaction_ID { get; set; }
-        public int customer_ID { get; set; }
-        public DateOnly date { get; set; }
-        public string day_of_week { get; set; }
-        public int time { get; set; }
-        public string entry_mode { get; set; }
-        public int amount { get; set; }
-        public string type_of_transaction { get; set; }
-        public string country_of_transaction { get; set; }
-        public string shipping_address { get; set; }
-        public string bank { get; set; }
-        public string type_of_card { get; set; }
-        public int fraud { get; set; }
-    }
+    public int? TransactionId { get; set; }
+
+    public int? CustomerId { get; set; }
+
+    public string? Date { get; set; }
+
+    public string? DayOfWeek { get; set; }
+
+    public int? Time { get; set; }
+
+    public string? EntryMode { get; set; }
+
+    public double? Amount { get; set; }
+
+    public string? TypeOfTransaction { get; set; }
+
+    public string? CountryOfTransaction { get; set; }
+
+    public string? ShippingAddress { get; set; }
+
+    public string? Bank { get; set; }
+
+    public string? TypeOfCard { get; set; }
+
+    public int? Fraud { get; set; }
 }
