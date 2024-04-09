@@ -26,12 +26,12 @@ namespace BuildsByBrickwell.Controllers
 
         public IActionResult Products(int pageNum, string? productType)
         {
-            int pageSize = 5;
+            int pageSize = 40;
 
             var blah = new ProductsListViewModel
             {
                 Products = _context.Products
-                    .Where(x => x.Category == productType || productType == null)
+                    .Where(x => x.Category == productType || productType == "Products")
                     .OrderBy(x => x.Name)
                     .Skip((pageNum - 1) * pageSize)
                     .Take(pageSize),
