@@ -59,6 +59,16 @@ namespace BuildsByBrickwell.Controllers
             return View();
         }
 
+        public IActionResult Checkout()
+        {
+            return View();
+        }
+
+        public IActionResult OrderStatus()
+        {
+            return View();
+        }
+
         public IActionResult Details(string Order)
         {
             var CurrentOrder = Order;
