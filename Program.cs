@@ -8,8 +8,19 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<IntexProjectContext>(options =>
 {
-    options.UseSqlite(builder.Configuration["ConnectionStrings:IntexConnection"]);
+    options.UseSqlServer(
+        builder.Configuration["ConnectionStrings:IntexConnection"],
+        sqlServerOptionsAction: sqlOptions =>
+        {
+            sqlOptions.EnableRetryOnFailure(
+                maxRetryCount: 5, // Maximum number of retries on transient failures.
+                maxRetryDelay: TimeSpan.FromSeconds(30), // Maximum delay between retries.
+                errorNumbersToAdd: null // SQL error numbers to be considered as transient. Leave as 'null' for defaults.
+            );
+        }
+    );
 });
+
 
 var app = builder.Build();
 
