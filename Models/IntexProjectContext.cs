@@ -24,16 +24,14 @@ public partial class IntexProjectContext : DbContext
     public virtual DbSet<Product> Products { get; set; }
 
     //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-     //   => optionsBuilder.UseSqlServer("Data Source=IntexProject.db");
+    //   => optionsBuilder.UseSqlServer("Data Source=IntexProject.db");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
 
         modelBuilder.Entity<Customer>(entity =>
         {
-            entity.HasNoKey();
-
+            entity.ToTable("Customers");
             entity.Property(e => e.Age).HasColumnName("age");
             entity.Property(e => e.BirthDate).HasColumnName("birth_date");
             entity.Property(e => e.CountryOfResidence).HasColumnName("country_of_residence");
@@ -45,8 +43,9 @@ public partial class IntexProjectContext : DbContext
 
         modelBuilder.Entity<LineItem>(entity =>
         {
-            entity.HasNoKey();
 
+            entity.ToTable("LineItems");
+            entity.HasKey(e => e.TransactionId); // Add a primary key property
             entity.Property(e => e.ProductId).HasColumnName("product_ID");
             entity.Property(e => e.Qty).HasColumnName("qty");
             entity.Property(e => e.Rating).HasColumnName("rating");
@@ -55,7 +54,8 @@ public partial class IntexProjectContext : DbContext
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasNoKey();
+            entity.ToTable("Orders");
+            entity.HasKey(e => e.CustomerId); // Add a primary key property
 
             entity.Property(e => e.Amount).HasColumnName("amount");
             entity.Property(e => e.Bank).HasColumnName("bank");
@@ -74,8 +74,7 @@ public partial class IntexProjectContext : DbContext
 
         modelBuilder.Entity<Product>(entity =>
         {
-            entity.HasNoKey();
-
+            entity.ToTable("Products");
             entity.Property(e => e.Category).HasColumnName("category");
             entity.Property(e => e.SecondaryCategory).HasColumnName("secondary_category");
             entity.Property(e => e.TertiaryCategory).HasColumnName("tertiary_category");

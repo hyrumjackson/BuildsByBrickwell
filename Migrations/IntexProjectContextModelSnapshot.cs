@@ -24,6 +24,11 @@ namespace BuildsByBrickwell.Migrations
 
             modelBuilder.Entity("BuildsByBrickwell.Models.Customer", b =>
                 {
+                    b.Property<int?>("CustomerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("customer_ID");
+
                     b.Property<double?>("Age")
                         .HasColumnType("float")
                         .HasColumnName("age");
@@ -35,10 +40,6 @@ namespace BuildsByBrickwell.Migrations
                     b.Property<string>("CountryOfResidence")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("country_of_residence");
-
-                    b.Property<int?>("CustomerId")
-                        .HasColumnType("int")
-                        .HasColumnName("customer_ID");
 
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)")
@@ -52,7 +53,9 @@ namespace BuildsByBrickwell.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("last_name");
 
-                    b.ToTable("Customers");
+                    b.HasKey("CustomerId");
+
+                    b.ToTable("Customers", (string)null);
                 });
 
             modelBuilder.Entity("BuildsByBrickwell.Models.LineItem", b =>
@@ -135,6 +138,11 @@ namespace BuildsByBrickwell.Migrations
 
             modelBuilder.Entity("BuildsByBrickwell.Models.Product", b =>
                 {
+                    b.Property<int?>("ProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("product_ID");
+
                     b.Property<string>("Category")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("category");
@@ -163,10 +171,6 @@ namespace BuildsByBrickwell.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("primary_color");
 
-                    b.Property<int?>("ProductId")
-                        .HasColumnType("int")
-                        .HasColumnName("product_ID");
-
                     b.Property<string>("SecondaryCategory")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("secondary_category");
@@ -183,7 +187,9 @@ namespace BuildsByBrickwell.Migrations
                         .HasColumnType("int")
                         .HasColumnName("year");
 
-                    b.ToTable("Products");
+                    b.HasKey("ProductId");
+
+                    b.ToTable("Products", (string)null);
                 });
 #pragma warning restore 612, 618
         }

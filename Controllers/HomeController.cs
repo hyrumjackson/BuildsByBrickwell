@@ -1,7 +1,9 @@
+using System;
 using System.Diagnostics;
 using BuildsByBrickwell.Models;
 using BuildsByBrickwell.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace BuildsByBrickwell.Controllers
 {
@@ -24,29 +26,42 @@ namespace BuildsByBrickwell.Controllers
             return View();
         }
 
-        public IActionResult Products(int pageNum, string? productType)
+        public IActionResult Products(int pageNum, string? productType, string? productColor, int pageSize = 5)
         {
-            int pageSize = 40;
+            // Ensure that the page size is within a valid range
+            pageSize = Math.Clamp(pageSize, 5, 20);
 
-            var blah = new ProductsListViewModel
+            // Query for products based on category, color, and page size filters
+            var filteredProducts = _context.Products
+                .Where(x => (string.IsNullOrEmpty(productType) || x.Category == productType || productType == "Products") &&
+                            (string.IsNullOrEmpty(productColor) || x.PrimaryColor == productColor || x.SecondaryColor == productColor))
+                .OrderBy(x => x.Name)
+                .Skip((pageNum - 1) * pageSize)
+                .Take(pageSize);
+
+            // Get the total count for pagination
+            int totalItems = _context.Products.Count();
+
+            // If a specific category is selected, update the total count
+            if (!string.IsNullOrEmpty(productType) && productType != "Products")
             {
-                Products = _context.Products
-                    .Where(x => x.Category == productType || productType == "Products")
-                    .OrderBy(x => x.Name)
-                    .Skip((pageNum - 1) * pageSize)
-                    .Take(pageSize),
+                totalItems = _context.Products.Where(x => x.Category == productType).Count();
+            }
 
+            var viewModel = new ProductsListViewModel
+            {
+                Products = filteredProducts,
                 PaginationInfo = new PaginationInfo
                 {
                     CurrentPage = pageNum,
                     ItemsPerPage = pageSize,
-                    TotalItems = productType == null ? _context.Products.Count() : _context.Products.Where(x => x.Category == productType).Count(),
+                    TotalItems = totalItems
                 },
-
-                CurrentProductType = productType
+                CurrentProductType = productType,
+                CurrentProductColor = productColor
             };
 
-            return View(blah);
+            return View(viewModel);
         }
 
         public IActionResult About()
@@ -54,7 +69,7 @@ namespace BuildsByBrickwell.Controllers
             return View();
         }
 
-        public IActionResult Cart()
+        public IActionResult HyrumCart()
         {
             return View();
         }
@@ -69,10 +84,12 @@ namespace BuildsByBrickwell.Controllers
             return View();
         }
 
-        public IActionResult Details(string Order)
+        public IActionResult Details(int id)
         {
-            var CurrentOrder = Order;
-            return View(CurrentOrder);
+            var productDetails = _context.Products
+                .Single(x => x.ProductId == id);
+
+            return View(productDetails);
         }
 
         public IActionResult Testing()
@@ -87,14 +104,80 @@ namespace BuildsByBrickwell.Controllers
             return View();
         }
 
-        public IActionResult AdminDashboard()
+        public IActionResult AdminUsers ()
         {
             return View();
         }
 
-        public IActionResult AdminUsers()
+        public IActionResult AdminProducts()
         {
-            return View();
+            var products = _context.Products
+                .ToList();
+
+            return View(products);
+        }
+
+        [HttpGet]
+        public IActionResult ProductForm()
+        {
+            return View("ProductForm", new Product());
+        }
+
+        [HttpPost]
+        public IActionResult ProductForm(Product response)
+        {
+            if (ModelState.IsValid)
+            {
+                response.Year = 0;
+                response.NumParts = 0;
+                response.Price = 0;
+                response.ImgLink = "";
+                _context.Products.Add(response); // add a record to the database
+                _context.SaveChanges();
+                return View("Confirmation", response);
+            }
+            else
+            {
+                return View(response);
+            }
+        }
+
+        // HTTP GET action method to display the movie edit form
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var recordtoEdit = _context.Products
+                .Single(x => x.ProductId == id);
+
+            return View("ProductForm", recordtoEdit);
+        }
+
+        // HTTP POST action method to handle movie edit submission
+        [HttpPost]
+        public IActionResult Edit(Product updatedInfo)
+        {
+            _context.Update(updatedInfo);
+            _context.SaveChanges();
+            return RedirectToAction("AdminProducts");
+        }
+
+        // HTTP GET action method to display the movie delete confirmation page
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var recordtoDelete = _context.Products
+                .Single(x => x.ProductId == id);
+
+            return View(recordtoDelete);
+        }
+
+        // HTTP POST action method to handle movie deletion
+        [HttpPost]
+        public IActionResult Delete(Product updatedInfo)
+        {
+            _context.Products.Remove(updatedInfo);
+            _context.SaveChanges();
+            return RedirectToAction("AdminProducts");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
