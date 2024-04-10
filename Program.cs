@@ -5,12 +5,27 @@ using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var connectionString = builder.Configuration.GetConnectionString("MyDatabase");
+var dbPassword = builder.Configuration["DbPassword"];
+
+connectionString += $"Password={dbPassword};";
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<IntexProjectContext>(options =>
 {
-    options.UseSqlite(builder.Configuration["ConnectionStrings:IntexConnection"]);
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("IntexConnection"),
+        sqlServerOptionsAction: sqlOptions =>
+        {
+            sqlOptions.EnableRetryOnFailure(
+                maxRetryCount: 5, // Maximum number of retries on transient failures.
+                maxRetryDelay: TimeSpan.FromSeconds(30), // Maximum delay between retries.
+                errorNumbersToAdd: null // SQL error numbers to be considered as transient. Leave as 'null' for defaults.
+            );
+        }
+    );
 });
 
 builder.Services.AddRazorPages();

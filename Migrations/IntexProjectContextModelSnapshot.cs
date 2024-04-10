@@ -3,6 +3,7 @@ using System;
 using BuildsByBrickwell.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -15,7 +16,11 @@ namespace BuildsByBrickwell.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.3");
+            modelBuilder
+                .HasAnnotation("ProductVersion", "8.0.4")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("BuildsByBrickwell.Models.Customer", b =>
                 {
@@ -25,27 +30,27 @@ namespace BuildsByBrickwell.Migrations
                         .HasColumnName("customer_ID");
 
                     b.Property<double?>("Age")
-                        .HasColumnType("REAL")
+                        .HasColumnType("float")
                         .HasColumnName("age");
 
                     b.Property<string>("BirthDate")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("birth_date");
 
                     b.Property<string>("CountryOfResidence")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("country_of_residence");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("first_name");
 
                     b.Property<string>("Gender")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("gender");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("last_name");
 
                     b.HasKey("CustomerId");
@@ -56,19 +61,19 @@ namespace BuildsByBrickwell.Migrations
             modelBuilder.Entity("BuildsByBrickwell.Models.LineItem", b =>
                 {
                     b.Property<int?>("ProductId")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("product_ID");
 
                     b.Property<int?>("Qty")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("qty");
 
                     b.Property<int?>("Rating")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("rating");
 
                     b.Property<int?>("TransactionId")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("transaction_ID");
 
                     b.ToTable("LineItems");
@@ -77,55 +82,55 @@ namespace BuildsByBrickwell.Migrations
             modelBuilder.Entity("BuildsByBrickwell.Models.Order", b =>
                 {
                     b.Property<double?>("Amount")
-                        .HasColumnType("REAL")
+                        .HasColumnType("float")
                         .HasColumnName("amount");
 
                     b.Property<string>("Bank")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("bank");
 
                     b.Property<string>("CountryOfTransaction")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("country_of_transaction");
 
                     b.Property<int?>("CustomerId")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("customer_ID");
 
                     b.Property<string>("Date")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("date");
 
                     b.Property<string>("DayOfWeek")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("day_of_week");
 
                     b.Property<string>("EntryMode")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("entry_mode");
 
                     b.Property<int?>("Fraud")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("fraud");
 
                     b.Property<string>("ShippingAddress")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("shipping_address");
 
                     b.Property<int?>("Time")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("time");
 
                     b.Property<int?>("TransactionId")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("transaction_ID");
 
                     b.Property<string>("TypeOfCard")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("type_of_card");
 
                     b.Property<string>("TypeOfTransaction")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("type_of_transaction");
 
                     b.ToTable("Orders");
@@ -139,39 +144,47 @@ namespace BuildsByBrickwell.Migrations
                         .HasColumnName("product_ID");
 
                     b.Property<string>("Category")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("category");
 
                     b.Property<string>("Description")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("description");
 
                     b.Property<string>("ImgLink")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("img_link");
 
                     b.Property<string>("Name")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("name");
 
                     b.Property<int?>("NumParts")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("num_parts");
 
                     b.Property<int?>("Price")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("price");
 
                     b.Property<string>("PrimaryColor")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("primary_color");
 
+                    b.Property<string>("SecondaryCategory")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("secondary_category");
+
                     b.Property<string>("SecondaryColor")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("secondary_color");
 
+                    b.Property<string>("TertiaryCategory")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("tertiary_category");
+
                     b.Property<int?>("Year")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("year");
 
                     b.HasKey("ProductId");
