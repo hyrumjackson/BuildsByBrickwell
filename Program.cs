@@ -3,13 +3,18 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var connectionString = builder.Configuration.GetConnectionString("MyDatabase");
+var dbPassword = builder.Configuration["DbPassword"];
+
+connectionString += $"Password={dbPassword};";
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<IntexProjectContext>(options =>
 {
     options.UseSqlServer(
-        builder.Configuration["ConnectionStrings:IntexConnection"],
+        builder.Configuration.GetConnectionString("IntexConnection"),
         sqlServerOptionsAction: sqlOptions =>
         {
             sqlOptions.EnableRetryOnFailure(
@@ -20,7 +25,6 @@ builder.Services.AddDbContext<IntexProjectContext>(options =>
         }
     );
 });
-
 
 var app = builder.Build();
 
