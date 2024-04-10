@@ -1,4 +1,5 @@
-﻿@{
+﻿@using BuildsByBrickwell.Infrastructure
+@{
     ViewData["Title"] = "Details";
 
     // Updated dummy product data with Rating and Key Features
@@ -15,6 +16,7 @@
     };
 }
 
+@model Product
 
 <div class="container py-5">
     <!-- Breadcrumb-like navigation -->
@@ -29,12 +31,12 @@
     <div class="row">
         <div class="col-md-6">
             <!-- Product Image -->
-            <img src="@product.ImageUrl" class="img-fluid" alt="@product.Name" />
+            <img src="@Model.ImgLink" class="img-fluid" alt="@Model.Name" />
         </div>
 
         <div class="col-md-6">
             <!-- Product Title & Rating -->
-            <h1>@product.Name</h1>
+            <h1>@Model.Name</h1>
             <div class="rating">
                 @for (int i = 0; i < 5; i++)
                 {
@@ -42,18 +44,25 @@
                 }
             </div>
             <!-- Product Price & Add to Cart Button -->
-            <h3 class="my-4">$@product.Price</h3>
-            <a class="btn" asp-area="" asp-controller="Home" asp-action="Cart" style="background-color: #00c3fc; color: #ffffff;">Add to Cart</a>
+            <h3 class="my-4">$@Model.Price</h3>
+            <a>
+                <form id="@Model.ProductId" method="post" asp-page="/Cart">
+                    <input type="hidden" asp-for="ProductId" />
+                    <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+                    <button type="submit" class="btn" style="background-color: #00c3fc; color: #ffffff;">Add to Cart</button>
+                </form>
+            </a>
             <a class="btn btn-secondary" asp-area="" asp-controller="Home" asp-action="Products">Back to List</a>
 
             <!-- Product Description -->
             <div class="mt-4">
                 <!-- Added margin-top for spacing -->
                 <h3>Description</h3>
-                <p>@product.Description</p>
+                <p>@Model.Description</p>
             </div>
 
             <!-- Key Features -->
+            @* Just FYI, key features isn't its own column and this won't work' *@
             <div class="mt-4">
                 <!-- Added margin-top for spacing -->
                 <h3>Key Features</h3>

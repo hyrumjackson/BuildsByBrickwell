@@ -110,6 +110,7 @@
                 @if (ViewContext.RouteData.Values["Action"].ToString() != "Login")
                 {
                     <div class="d-flex align-items-center">
+                        <vc:cart-summary />
                         <a class="btn login-btn text-white" asp-area="" asp-controller="Home" asp-action="Login">Login</a>
                         <div class="dropdown menu-icon-container">
                             <a class="menu-icon text-white" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
@@ -119,7 +120,16 @@
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
                                 <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Products">Products</a></li>
                                 <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="About">About Us</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Cart">Cart</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="HyrumCart">HyrumCart</a></li>
+                                <li>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AdminUsers">Admin Users</a>
+                                </li>
+                                <li>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AdminProducts">Admin Products</a>
+                                </li>
+                                <li>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ProductForm"> Product Form</a>
+                                </li>
                             </ul>
                         </div>
                     </div>

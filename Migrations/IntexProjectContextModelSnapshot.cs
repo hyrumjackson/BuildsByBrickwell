@@ -19,6 +19,11 @@ namespace BuildsByBrickwell.Migrations
 
             modelBuilder.Entity("BuildsByBrickwell.Models.Customer", b =>
                 {
+                    b.Property<int?>("CustomerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("customer_ID");
+
                     b.Property<double?>("Age")
                         .HasColumnType("REAL")
                         .HasColumnName("age");
@@ -30,10 +35,6 @@ namespace BuildsByBrickwell.Migrations
                     b.Property<string>("CountryOfResidence")
                         .HasColumnType("TEXT")
                         .HasColumnName("country_of_residence");
-
-                    b.Property<int?>("CustomerId")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("customer_ID");
 
                     b.Property<string>("FirstName")
                         .HasColumnType("TEXT")
@@ -47,7 +48,9 @@ namespace BuildsByBrickwell.Migrations
                         .HasColumnType("TEXT")
                         .HasColumnName("last_name");
 
-                    b.ToTable("Customers");
+                    b.HasKey("CustomerId");
+
+                    b.ToTable("Customers", (string)null);
                 });
 
             modelBuilder.Entity("BuildsByBrickwell.Models.LineItem", b =>
@@ -130,6 +133,11 @@ namespace BuildsByBrickwell.Migrations
 
             modelBuilder.Entity("BuildsByBrickwell.Models.Product", b =>
                 {
+                    b.Property<int?>("ProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("product_ID");
+
                     b.Property<string>("Category")
                         .HasColumnType("TEXT")
                         .HasColumnName("category");
@@ -158,10 +166,6 @@ namespace BuildsByBrickwell.Migrations
                         .HasColumnType("TEXT")
                         .HasColumnName("primary_color");
 
-                    b.Property<int?>("ProductId")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("product_ID");
-
                     b.Property<string>("SecondaryColor")
                         .HasColumnType("TEXT")
                         .HasColumnName("secondary_color");
@@ -170,7 +174,9 @@ namespace BuildsByBrickwell.Migrations
                         .HasColumnType("INTEGER")
                         .HasColumnName("year");
 
-                    b.ToTable("Products");
+                    b.HasKey("ProductId");
+
+                    b.ToTable("Products", (string)null);
                 });
 #pragma warning restore 612, 618
         }
